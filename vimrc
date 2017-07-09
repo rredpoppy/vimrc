@@ -15,7 +15,7 @@ call plug#begin('~/.vim/plugged')
 Plug 'junegunn/goyo.vim'
 
 " completion during typing
-Plug 'neocomplcache'
+Plug 'vim-scripts/neocomplcache'
 " solarized colorscheme
 Plug 'altercation/vim-colors-solarized'
 " Right way to handle trailing-whitespace
@@ -37,6 +37,8 @@ Plug 'airblade/vim-gitgutter'
 " Align code
 Plug 'junegunn/vim-easy-align'
 Plug 'scrooloose/syntastic'             " syntax checker
+" --- Python
+Plug 'klen/python-mode'
 " --- Haskell
 Plug 'yogsototh/haskell-vim'            " syntax indentation / highlight
 " Plug 'enomsg/vim-haskellConcealPlus'    " unicode for haskell operators
@@ -129,7 +131,7 @@ nmap gN <Plug>GitGutterPrevHunk
 " -- solarized theme
 set background=dark
 try
-    colorscheme solarized
+    colorscheme zenburn
 catch
 endtry
 
@@ -180,7 +182,10 @@ let g:rbpt_colorpairs = [
 	\ ['darkred',     'firebrick3'],
 	\ ]
 
-
+"---------------------
+" Python
+" --------------------
+let g:pymode_python = 'python3'
 
 " #####################
 " ### Personal conf ###
@@ -219,6 +224,8 @@ set autoindent
 set smartindent
 set cindent
 set cinoptions=(0,u0,U0
+set foldmethod=indent
+set number
 
 " Spellchecking
 if has("spell") " if vim support spell checking
@@ -256,18 +263,15 @@ autocmd BufEnter *.cljs,*.cljs.hl set filetype=clojure
 " Personal
 " ========
 
-" Easier anti-quote
-imap éé `
-
 " -- show the column 81
-" if (exists('+colorcolumn'))
-"     set colorcolumn=80
-"     highlight ColorColumn ctermbg=1
-" endif
+ if (exists('+colorcolumn'))
+     set colorcolumn=80
+     highlight ColorColumn ctermbg=1
+ endif
 
 " --- type ° to search the word in all files in the current dir
-nmap ° :Ag <c-r>=expand("<cword>")<cr><cr>
-nnoremap <space>/ :Ag 
+nmap \ :Ag <c-r>=expand("<cword>")<cr><cr>
+nnoremap <space>/ :Ag
 
 " -- js beautifer
 autocmd FileType javascript noremap <buffer> <c-f> :call JsBeautify()<cr>
